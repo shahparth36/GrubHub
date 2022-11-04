@@ -8,6 +8,12 @@ const path = require("path");
 const { errorHandler } = require("./middleware");
 const { mongodb } = require("./config");
 
+const authenticationRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
+const restaurantRoutes = require("./routes/restaurant.routes");
+const foodRoutes = require("./routes/food.routes");
+const orderRoutes = require("./routes/order.routes");
+
 mongodb.connect(process.env.MONGODB_URL);
 
 app.use(express.static(path.join(__dirname, "/../client", "build")));
@@ -15,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(logger("dev"));
 app.use(cors());
+
+app.use("/api/auth", authenticationRoutes);
+app.use("/api", userRoutes, restaurantRoutes, foodRoutes, orderRoutes);
 
 app.use(errorHandler);
 
