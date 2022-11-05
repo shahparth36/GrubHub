@@ -23,12 +23,10 @@ const addRestaurant = async (req, res, next) => {
 
     const createdRestaurant = await Restaurant.create(restaurantDetails);
 
-    return res
-      .status(200)
-      .json({
-        message: "Added Restaurant Successfully",
-        user: createdRestaurant,
-      });
+    return res.status(200).json({
+      message: "Added Restaurant Successfully",
+      user: createdRestaurant,
+    });
   } catch (error) {
     next(error);
   }
@@ -59,11 +57,9 @@ const addRestaurantManager = async (req, res, next) => {
     restaurant.managers.push(restaurantManger._id);
     restaurant.save();
 
-    return res
-      .status(200)
-      .json({
-        message: "Added restaurant manager to restaurant successfully.",
-      });
+    return res.status(200).json({
+      message: "Added restaurant manager to restaurant successfully.",
+    });
   } catch (error) {
     next(error);
   }

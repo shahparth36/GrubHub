@@ -42,8 +42,9 @@ function verifyToken(token, tokenType = ACCESS_TOKEN) {
 }
 
 function getTokenExpirationTime(tokenType) {
-  if (tokenType === ACCESS_TOKEN) return ACCESS_TOKEN_SECRET.expiresIn;
-  else if (tokenType === REFRESH_TOKEN) return REFRESH_TOKEN_SECRET.expiresIn;
+  if (tokenType === ACCESS_TOKEN) return ACCESS_TOKEN_SECRET.expiresInMinutes;
+  else if (tokenType === REFRESH_TOKEN)
+    return REFRESH_TOKEN_SECRET.expiresInMinutes;
   else return "Invalid token type";
 }
 
@@ -53,7 +54,15 @@ function getTokenSecretKey(tokenType) {
   else return "Invalid token type";
 }
 
+function getToken(req) {
+  console.log(req.headers);
+  return req.headers["authorization"]
+    ? req.headers["authorization"].split(" ")[1]
+    : false;
+}
+
 module.exports = {
   generateToken,
   verifyToken,
+  getToken,
 };

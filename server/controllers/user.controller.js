@@ -4,6 +4,19 @@ const User = require("../models").user;
 
 const { generateToken, hashPassword } = require("../utils");
 
+const getUser = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    return res.status(200).json({
+      message: "User fetched successfully",
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const registerCustomer = async (req, res, next) => {
   try {
     const { email, password, name, contactNo, address } = req.body;
@@ -22,14 +35,11 @@ const registerCustomer = async (req, res, next) => {
       role: userRoles.CUSTOMER,
     };
 
-    const createdCustomer = await User.create(customerDetails);
+    await User.create(customerDetails);
 
-    return res
-      .status(200)
-      .json({
-        message: "Customer Registration Successfull",
-        user: createdCustomer,
-      });
+    return res.status(200).json({
+      message: "Customer Registration Successfull",
+    });
   } catch (error) {
     next(error);
   }
@@ -56,18 +66,17 @@ const registerRestaurantManager = async (req, res, next) => {
       restaurantManagerDetails
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Restaurant Manager Registration Successfull",
-        user: createdRestaurantManager,
-      });
+    return res.status(200).json({
+      message: "Restaurant Manager Registration Successfull",
+      user: createdRestaurantManager,
+    });
   } catch (error) {
     next(error);
   }
 };
 
 module.exports = {
+  getUser,
   registerCustomer,
   registerRestaurantManager,
 };

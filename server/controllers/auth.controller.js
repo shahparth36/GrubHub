@@ -1,6 +1,6 @@
 const User = require("../models").user;
 
-const { generateToken } = require("../utils");
+const { generateToken, verifyPassword } = require("../utils");
 
 const authenticateUser = async (req, res, next) => {
   try {
@@ -22,6 +22,7 @@ const authenticateUser = async (req, res, next) => {
         return res.status(200).json({
           message: "Authenticated user successfully",
           accessToken: token,
+          role: userExists.role,
         });
       })
       .catch(function (err) {

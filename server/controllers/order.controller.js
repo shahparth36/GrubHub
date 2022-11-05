@@ -51,12 +51,10 @@ const updateOrderStatus = async (req, res, next) => {
       await Order.findByIdAndUpdate(orderId, { orderStatus });
     else throw new Error("Invalid order status");
 
-    return res
-      .status(200)
-      .json({
-        message: "Updated Order Status Successfully",
-        order: createdOrder,
-      });
+    return res.status(200).json({
+      message: "Updated Order Status Successfully",
+      order: createdOrder,
+    });
   } catch (error) {
     next(error);
   }
