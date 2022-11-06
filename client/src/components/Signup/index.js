@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,7 +10,11 @@ import TextField from "@mui/joy/TextField";
 import axios from "../../axios";
 import { setToken } from "../../utils/localStorage";
 
+import { UserContext } from "../../context/userContext";
+
 function Signup({ isSignupModalOpen, closeModal, openModal, setFeedbackbar }) {
+  const { user, setUser } = useContext(UserContext);
+
   const [userValues, setUserValues] = useState({
     name: "",
     email: "",
@@ -34,12 +38,18 @@ function Signup({ isSignupModalOpen, closeModal, openModal, setFeedbackbar }) {
 
   const handleSignup = async () => {
     try {
-      await axios.post("/register/customer", { ...userValues });
+      const response = await axios.post("/register/customer", {
+        ...userValues,
+      });
       const authResponse = await axios.post("/auth/authenticate", {
         email: userValues.email,
         password: userValues.password,
       });
       const accessToken = authResponse.data.accessToken;
+      setUser({
+        isAuthenticated: true,
+        userDetails: response.data.user,
+      });
       setToken(accessToken, "ACCESS_TOKEN");
       setFeedbackbar({
         isOpen: true,

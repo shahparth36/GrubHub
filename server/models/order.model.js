@@ -5,6 +5,8 @@ const createOrderModel = (mongoose) => {
       restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
       deliveryAgent: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       billAmount: { type: Number },
+      governmentTaxes: { type: Number },
+      grandTotal: { type: Number },
       orderStatus: { type: String },
       paymentType: { type: String },
       paymentStatus: { type: String },

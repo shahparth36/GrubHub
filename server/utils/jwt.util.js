@@ -55,7 +55,6 @@ function getTokenSecretKey(tokenType) {
 }
 
 function getToken(req) {
-  console.log(req.headers);
   return req.headers["authorization"]
     ? req.headers["authorization"].split(" ")[1]
     : false;

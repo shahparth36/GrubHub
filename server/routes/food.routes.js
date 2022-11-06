@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { addFoodItems } = require("../controllers");
+const { getFoodItems, addFoodItems } = require("../controllers");
+
+router.get("/food", getFoodItems);
 
 router.post("/food", addFoodItems);
 

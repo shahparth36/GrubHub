@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,8 +8,11 @@ import { Typography } from "@mui/material";
 import TextField from "@mui/joy/TextField";
 import axios from "../../axios";
 import { setToken } from "../../utils/localStorage";
+import { UserContext } from "../../context/userContext";
 
 function Login({ isLoginModalOpen, closeModal, openModal, setFeedbackbar }) {
+  const { user, setUser } = useContext(UserContext);
+
   const [userValues, setUserValues] = useState({
     email: "",
     password: "",
@@ -43,6 +46,10 @@ function Login({ isLoginModalOpen, closeModal, openModal, setFeedbackbar }) {
           severity: "error",
         });
       else {
+        setUser({
+          isAuthenticated: true,
+          userDetails: response.data.user,
+        });
         setFeedbackbar({
           isOpen: true,
           message: "Login Successfull",

@@ -6,10 +6,36 @@ const User = require("../models").user;
 const Restaurant = require("../models").restaurant;
 const Order = require("../models").order;
 
+const getOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+
+    const order = await Order.findById(orderId)
+      .populate("customer")
+      .populate("restaurant")
+      .populate("items.foodId");
+    if (!order) throw new Error("Order with given id not found");
+
+    return res.status(200).json({
+      message: "Fetched order successfully",
+      order,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const placeOrder = async (req, res, next) => {
   try {
-    const { customerId, restaurantId, billAmount, paymentType, items } =
-      req.body;
+    const {
+      customerId,
+      restaurantId,
+      billAmount,
+      governmentTaxes,
+      grandTotal,
+      paymentType,
+      items,
+    } = req.body;
 
     const customer = await User.findById(customerId);
     if (!customer) throw new Error("Customer with given Id not found");
@@ -18,7 +44,9 @@ const placeOrder = async (req, res, next) => {
       customer: customerId,
       restaurant: restaurantId,
       billAmount,
-      orderStatus: order.CONFIRMED,
+      governmentTaxes,
+      grandTotal,
+      orderStatus: orderConstants.CONFIRMED,
       paymentType,
       paymentStatus:
         paymentType === payment.paymentTypes.CASH_ON_DELIVERY
@@ -79,6 +107,7 @@ const closeOrder = async (req, res, next) => {
 };
 
 module.exports = {
+  getOrder,
   placeOrder,
   updateOrderStatus,
   closeOrder,

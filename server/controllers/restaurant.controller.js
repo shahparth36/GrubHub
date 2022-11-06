@@ -6,6 +6,19 @@ const Restaurant = require("../models").restaurant;
 const { default: mongoose } = require("mongoose");
 const { generateToken, hashPassword } = require("../utils");
 
+const getRestaurants = async (req, res, next) => {
+  try {
+    const restaurants = await Restaurant.find({});
+
+    return res.status(200).json({
+      message: "Fetched Restaurants Successfully",
+      restaurants,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addRestaurant = async (req, res, next) => {
   try {
     const { email, name, contactNo, address } = req.body;
@@ -66,6 +79,7 @@ const addRestaurantManager = async (req, res, next) => {
 };
 
 module.exports = {
+  getRestaurants,
   addRestaurant,
   addRestaurantManager,
 };

@@ -23,6 +23,7 @@ const authenticateUser = async (req, res, next) => {
           message: "Authenticated user successfully",
           accessToken: token,
           role: userExists.role,
+          user: userExists,
         });
       })
       .catch(function (err) {

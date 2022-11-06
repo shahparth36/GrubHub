@@ -18,6 +18,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Badge } from "@mui/material";
 
+import { CartContext } from "../../context/cartContext";
+
 const pages = [];
 const settings = ["Profile", "Account", "Logout"];
 
@@ -62,6 +64,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const ResponsiveAppBar = ({ user, openModal }) => {
+  const { cart } = React.useContext(CartContext);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -188,7 +192,7 @@ const ResponsiveAppBar = ({ user, openModal }) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {user ? (
+            {user.isAuthenticated ? (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr: 2 }}>
@@ -237,13 +241,13 @@ const ResponsiveAppBar = ({ user, openModal }) => {
             )}
             <IconButton
               size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={() => openModal("CART")}
               color="inherit"
             >
-              <Badge badgeContent={0} color="error">
+              <Badge
+                badgeContent={cart.items && cart.items.length}
+                color="error"
+              >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

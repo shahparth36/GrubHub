@@ -35,10 +35,11 @@ const registerCustomer = async (req, res, next) => {
       role: userRoles.CUSTOMER,
     };
 
-    await User.create(customerDetails);
+    const createdUser = await User.create(customerDetails);
 
     return res.status(200).json({
       message: "Customer Registration Successfull",
+      user: createdUser,
     });
   } catch (error) {
     next(error);
