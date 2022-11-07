@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+
 import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -20,7 +22,13 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "../../axios";
 
 function TopRestaurants() {
+  const navigate = useNavigate();
+
   const [restaurants, setRestaurants] = useState([]);
+
+  const handleClick = (restaurantId) => {
+    navigate(`/restaurant/${restaurantId}`);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -42,7 +50,10 @@ function TopRestaurants() {
         restaurants.map((restaurant, index) => {
           return (
             <Grid key={index} item xs={3} style={{ marginLeft: 25 }}>
-              <Card sx={{ maxWidth: 360 }}>
+              <Card
+                onClick={() => handleClick(restaurant._id)}
+                sx={{ maxWidth: 360, cursor: "pointer" }}
+              >
                 <CardMedia
                   component="img"
                   height="194"

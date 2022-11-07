@@ -2,9 +2,81 @@ const userRoles = require("../constants").userRoles;
 
 const User = require("../models").user;
 const Restaurant = require("../models").restaurant;
+const Food = require("../models").food;
 
 const { default: mongoose } = require("mongoose");
 const { generateToken, hashPassword } = require("../utils");
+
+const getSearchResults = async (req, res, next) => {
+  try {
+    const { searchValue } = req.query;
+    const restaurants = await Restaurant.find({
+      name: new RegExp(searchValue, "i"),
+    });
+
+    const dishes = await Food.find({
+      name: new RegExp(searchValue, "i"),
+    });
+
+    const updatedRestaurantsFormat = restaurants.map((restaurant) => {
+      return {
+        _id: restaurant._id,
+        name: restaurant.name,
+        type: "Restaurant",
+      };
+    });
+
+    const updatedDishesFormat = dishes.map((dish) => {
+      return {
+        _id: dish._id,
+        name: dish.name,
+        type: "Dish",
+      };
+    });
+
+    const searchResults = updatedRestaurantsFormat.concat(updatedDishesFormat);
+
+    return res.status(200).json({
+      message: "Fetched search results successfully",
+      searchResults,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getRestaurant = async (req, res, next) => {
+  try {
+    const { restaurantId } = req.params;
+
+    const restaurant = await Restaurant.findById(restaurantId);
+    if (!restaurant) throw new Error("Restaurant with given id does not exist");
+
+    const dishesAtRestaurant = await Food.find({
+      restaurant: restaurantId,
+    });
+    const categories = {};
+    for (const dish of dishesAtRestaurant) {
+      if (dish.category in categories) {
+        console.log(typeof categories[dish.category]);
+        categories[dish.category] = [...categories[dish.category], dish];
+      } else {
+        categories[dish.category] = [dish];
+      }
+    }
+
+    return res.status(200).json({
+      message: "Fetched restaurant successfully",
+      restaurant: {
+        ...restaurant.toJSON(),
+        dishes: dishesAtRestaurant,
+        categories,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const getRestaurants = async (req, res, next) => {
   try {
@@ -79,6 +151,8 @@ const addRestaurantManager = async (req, res, next) => {
 };
 
 module.exports = {
+  getSearchResults,
+  getRestaurant,
   getRestaurants,
   addRestaurant,
   addRestaurantManager,

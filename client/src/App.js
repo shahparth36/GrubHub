@@ -41,6 +41,7 @@ function App() {
   };
 
   const handleRemoveItemFromCart = (foodItem) => {
+    console.log(foodItem);
     let localCart = JSON.parse(window.localStorage.getItem("ghcart"));
 
     const existingItem =

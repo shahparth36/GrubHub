@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,47 +25,9 @@ import { CartContext } from "../../context/cartContext";
 const pages = [];
 const settings = ["Profile", "Account", "Logout"];
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "40ch",
-    },
-  },
-}));
-
 const ResponsiveAppBar = ({ user, openModal }) => {
+  const navigate = useNavigate();
+
   const { cart } = React.useContext(CartContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -82,6 +46,10 @@ const ResponsiveAppBar = ({ user, openModal }) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleSearchClick = () => {
+    navigate("/search");
   };
 
   return (
@@ -149,15 +117,6 @@ const ResponsiveAppBar = ({ user, openModal }) => {
               </>
             }
           </Box>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Dish or restaurant name…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
           <DeliveryDiningIcon
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
           />
@@ -192,6 +151,26 @@ const ResponsiveAppBar = ({ user, openModal }) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Button
+              style={{ color: "white", marginRight: ".7rem" }}
+              startIcon={<SearchIcon />}
+              onClick={handleSearchClick}
+            >
+              Search
+            </Button>
+            <IconButton
+              size="large"
+              onClick={() => openModal("CART")}
+              color="inherit"
+              style={{ marginRight: "1rem" }}
+            >
+              <Badge
+                badgeContent={cart.items && cart.items.length}
+                color="error"
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
             {user.isAuthenticated ? (
               <>
                 <Tooltip title="Open settings">
@@ -239,18 +218,6 @@ const ResponsiveAppBar = ({ user, openModal }) => {
                 </Button>
               </>
             )}
-            <IconButton
-              size="large"
-              onClick={() => openModal("CART")}
-              color="inherit"
-            >
-              <Badge
-                badgeContent={cart.items && cart.items.length}
-                color="error"
-              >
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
           </Box>
         </Toolbar>
       </Container>
