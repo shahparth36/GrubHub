@@ -18,6 +18,7 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import { Badge } from "@mui/material";
 
 import { CartContext } from "../../context/cartContext";
@@ -50,6 +51,10 @@ const ResponsiveAppBar = ({ user, openModal }) => {
 
   const handleSearchClick = () => {
     navigate("/search");
+  };
+
+  const handleReservationsClick = () => {
+    navigate("/reservations");
   };
 
   return (
@@ -158,6 +163,15 @@ const ResponsiveAppBar = ({ user, openModal }) => {
             >
               Search
             </Button>
+            {user.isAuthenticated && (
+              <Button
+                style={{ color: "white", marginRight: ".7rem" }}
+                startIcon={<TableRestaurantIcon />}
+                onClick={handleReservationsClick}
+              >
+                Reservations
+              </Button>
+            )}
             <IconButton
               size="large"
               onClick={() => openModal("CART")}

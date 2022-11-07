@@ -13,6 +13,7 @@ const userRoutes = require("./routes/user.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const foodRoutes = require("./routes/food.routes");
 const orderRoutes = require("./routes/order.routes");
+const reservationRoutes = require("./routes/reservation.routes");
 
 mongodb.connect(process.env.MONGODB_URL);
 
@@ -23,7 +24,14 @@ app.use(logger("dev"));
 app.use(cors());
 
 app.use("/api/auth", authenticationRoutes);
-app.use("/api", userRoutes, restaurantRoutes, foodRoutes, orderRoutes);
+app.use(
+  "/api",
+  userRoutes,
+  restaurantRoutes,
+  foodRoutes,
+  orderRoutes,
+  reservationRoutes
+);
 
 app.use(errorHandler);
 

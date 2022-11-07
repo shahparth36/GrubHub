@@ -58,7 +58,6 @@ const getRestaurant = async (req, res, next) => {
     const categories = {};
     for (const dish of dishesAtRestaurant) {
       if (dish.category in categories) {
-        console.log(typeof categories[dish.category]);
         categories[dish.category] = [...categories[dish.category], dish];
       } else {
         categories[dish.category] = [dish];

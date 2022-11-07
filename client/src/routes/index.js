@@ -4,6 +4,7 @@ import Checkout from "../pages/Checkout";
 import OrderDetails from "../pages/OrderDetails";
 import Search from "../pages/Search";
 import Restaurant from "../pages/Restaurant";
+import Reservations from "../pages/Reservations";
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
   {
     path: "/restaurant/:restaurantId",
     element: <Restaurant />,
+  },
+  {
+    path: "/reservations",
+    element: <Reservations />,
   },
 ];
 

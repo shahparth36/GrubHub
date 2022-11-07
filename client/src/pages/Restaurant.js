@@ -7,9 +7,13 @@ import {
   CardContent,
   CardMedia,
   Container,
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
@@ -25,6 +29,7 @@ import FeedbackBar from "../components/FeedbackBar";
 import LoadingSpinner from "../components/LoadingSpinner";
 import styled from "@emotion/styled";
 import { CartContext } from "../context/cartContext";
+import { UserContext } from "../context/userContext";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,7 +61,8 @@ const CustomCard = styled("div")(({ theme }) => ({
 
 function Restaurant() {
   const { cart, setCart } = useContext(CartContext);
-  console.log(cart);
+  const { user } = useContext(UserContext);
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -71,6 +77,11 @@ function Restaurant() {
   const [value, setValue] = React.useState(0);
   const [itemsValue, setItemsValue] = React.useState(0);
   const [currentCategory, setCurrentCategory] = React.useState("");
+  const [reservation, setReservation] = React.useState({
+    date: "",
+    noOfGuests: "",
+    session: "",
+  });
 
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
@@ -102,6 +113,79 @@ function Restaurant() {
       }
     }
     return obj;
+  };
+
+  const handleDateChange = (event) => {
+    setReservation({
+      ...reservation,
+      date: new Date(event.target.value),
+    });
+  };
+
+  const handleNoOfGuestsChange = (event) => {
+    setReservation({
+      ...reservation,
+      noOfGuests: event.target.value,
+    });
+  };
+
+  const handleSessionChange = (event) => {
+    setReservation({
+      ...reservation,
+      session: event.target.value,
+    });
+  };
+
+  const handleReserve = async () => {
+    try {
+      setIsLoading(true);
+      if (
+        reservation.date !== "" &&
+        reservation.noOfGuests !== "" &&
+        reservation.session !== ""
+      ) {
+        const reservationDetails = {
+          ...reservation,
+          customerId: user.userDetails._id,
+          restaurantId: restaurant._id,
+        };
+        await axios.post("/reservation", reservationDetails);
+        setFeedbackbar({
+          isOpen: true,
+          message: "Tabled reserved successfully",
+          severity: "success",
+        });
+        setTimeout(() => {
+          navigate(`/`);
+        }, 4000);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      if (error.response && error.response.data.error) {
+        if (
+          error.response.data.error === "Customer with given id does not exist"
+        )
+          setFeedbackbar({
+            isOpen: true,
+            message: "Please login to reserve a table",
+            severity: "error",
+          });
+        else {
+          setFeedbackbar({
+            isOpen: true,
+            message: error.response.data.error,
+            severity: "error",
+          });
+        }
+      } else {
+        setFeedbackbar({
+          isOpen: true,
+          message: "Something went wrong. Try again.",
+          severity: "error",
+        });
+      }
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -308,7 +392,94 @@ function Restaurant() {
                   )}
               </Box>
             </TabPanel>
-            <TabPanel value={value} index={1}></TabPanel>
+            <TabPanel value={value} index={1}>
+              <Typography>Please select your booking details</Typography>
+              <div style={{ display: "flex" }}>
+                <div style={{ width: "200px", marginTop: "1rem" }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Date</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={restaurant.date}
+                      label="Date"
+                      onChange={handleDateChange}
+                    >
+                      {Array(30)
+                        .fill(0)
+                        .map((element, index) => {
+                          const todaysDate = new Date();
+                          const date = new Date(
+                            todaysDate.setDate(todaysDate.getDate() + index + 1)
+                          )
+                            .toDateString()
+                            .toString();
+                          return <MenuItem value={date}>{date}</MenuItem>;
+                        })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div
+                  style={{
+                    width: "200px",
+                    marginTop: "1rem",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      No Of Guests
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={restaurant.noOfGuests}
+                      label="No Of Guests"
+                      onChange={handleNoOfGuestsChange}
+                    >
+                      {Array(10)
+                        .fill(0)
+                        .map((element, index) => {
+                          return (
+                            <MenuItem value={index + 1}>{index + 1}</MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div
+                  style={{
+                    width: "200px",
+                    marginTop: "1rem",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Session
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={restaurant.session}
+                      label="Session"
+                      onChange={handleSessionChange}
+                    >
+                      <MenuItem value={"Lunch"}>Lunch</MenuItem>
+                      <MenuItem value={"Dinner"}>Dinner</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <Button
+                onClick={handleReserve}
+                style={{ marginTop: "1rem", width: "200px" }}
+                color="secondary"
+                variant="contained"
+              >
+                Reserve
+              </Button>
+            </TabPanel>
           </Box>
         </Container>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Dialog from "@mui/material/Dialog";
@@ -20,9 +20,12 @@ import AddIcon from "@mui/icons-material/Add";
 
 import axios from "../../axios";
 import { setToken } from "../../utils/localStorage";
+import { UserContext } from "../../context/userContext";
 
 function Cart({ address, isCartModalOpen, cart, closeModal, setFeedbackbar }) {
   const navigate = useNavigate();
+
+  const { user } = useContext(UserContext);
 
   const handleClose = () => {
     closeModal("CART");
@@ -41,7 +44,15 @@ function Cart({ address, isCartModalOpen, cart, closeModal, setFeedbackbar }) {
 
   const handleProceed = () => {
     closeModal("CART");
-    navigate("/order");
+    if (!user.isAuthenticated)
+      setFeedbackbar({
+        isOpen: true,
+        message: "Please login to proceed ahead",
+        severity: "error",
+      });
+    else {
+      navigate("/order");
+    }
   };
 
   return (
