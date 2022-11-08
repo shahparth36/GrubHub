@@ -5,7 +5,8 @@ const createRestaurantModel = (mongoose) => {
       contactNo: { type: Number, required: true },
       address: { type: String, required: true },
       email: { type: String, required: true },
-      managers: { type: Array, default: [] },
+      password: { type: String, required: true },
+      managers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     },
     {
       timestamps: true,

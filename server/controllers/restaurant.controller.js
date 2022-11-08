@@ -49,7 +49,9 @@ const getRestaurant = async (req, res, next) => {
   try {
     const { restaurantId } = req.params;
 
-    const restaurant = await Restaurant.findById(restaurantId);
+    const restaurant = await Restaurant.findById(restaurantId).populate(
+      "managers"
+    );
     if (!restaurant) throw new Error("Restaurant with given id does not exist");
 
     const dishesAtRestaurant = await Food.find({
@@ -77,6 +79,23 @@ const getRestaurant = async (req, res, next) => {
   }
 };
 
+const getRestaurantByManagerId = async (req, res, next) => {
+  try {
+    const { managerId } = req.params;
+
+    const restaurant = await Restaurant.findOne({ managers: managerId });
+
+    return res.status(200).json({
+      message: "Fetched restaurant successfully",
+      restaurant: {
+        ...restaurant.toJSON(),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getRestaurants = async (req, res, next) => {
   try {
     const restaurants = await Restaurant.find({});
@@ -92,16 +111,19 @@ const getRestaurants = async (req, res, next) => {
 
 const addRestaurant = async (req, res, next) => {
   try {
-    const { email, name, contactNo, address } = req.body;
+    const { email, name, contactNo, address, password } = req.body;
 
     const restaurantExists = await Restaurant.findOne({ name });
     if (restaurantExists)
       throw new Error("Restaurant with given name already exists");
 
+    const hashedPassword = hashPassword(password);
+
     const restaurantDetails = {
       name,
       contactNo,
       email,
+      password: hashedPassword,
       address,
     };
 
@@ -152,6 +174,7 @@ const addRestaurantManager = async (req, res, next) => {
 module.exports = {
   getSearchResults,
   getRestaurant,
+  getRestaurantByManagerId,
   getRestaurants,
   addRestaurant,
   addRestaurantManager,

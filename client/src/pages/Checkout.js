@@ -36,6 +36,7 @@ import { setToken } from "../utils/localStorage";
 import { CartContext } from "../context/cartContext";
 import { UserContext } from "../context/userContext";
 import FeedbackBar from "../components/FeedbackBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const steps = ["Delivery address", "Review your order", "Payment details"];
 
@@ -46,6 +47,8 @@ function Checkout() {
   const { cart, setCart } = useContext(CartContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [feedbackbar, setFeedbackbar] = useState({
     isOpen: false,
@@ -85,6 +88,7 @@ function Checkout() {
 
   const placeOrder = async (paymentType) => {
     try {
+      setIsLoading(true);
       let localCart = JSON.parse(window.localStorage.getItem("ghcart"));
       localCart = localCart.map((cartItem, index) => {
         return {
@@ -115,6 +119,7 @@ function Checkout() {
       setTimeout(() => {
         navigate(`/order/${response.data.order._id}`);
       }, 5000);
+      setIsLoading(false);
     } catch (error) {
       if (error.response && error.response.data.error)
         setFeedbackbar({
@@ -128,6 +133,7 @@ function Checkout() {
           message: "Something went wrong.",
           severity: "error",
         });
+      setIsLoading(false);
     }
   };
 
@@ -138,7 +144,7 @@ function Checkout() {
       case 1:
         return <Review />;
       case 2:
-        return <PaymentForm placeOrder={placeOrder} />;
+        return <PaymentForm isLoading={isLoading} placeOrder={placeOrder} />;
       default:
         throw new Error("Unknown step");
     }
@@ -152,52 +158,58 @@ function Checkout() {
     <Navigate to="/" />
   ) : (
     <>
-      <FeedbackBar
-        feedbackbar={feedbackbar}
-        closeFeedbackbar={closeFeedbackbar}
-      />
-      <div style={{ padding: "1rem" }}>
-        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography variant="h5" gutterBottom>
-              Thank you for your order.
-            </Typography>
-            <Typography variant="subtitle1">
-              Your order number is #2001539. We have emailed your order
-              confirmation, and will send you an update when your order has
-              shipped.
-            </Typography>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {getStepContent(activeStep)}
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              {activeStep !== 0 && (
-                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                  Back
-                </Button>
-              )}
-              {activeStep !== steps.length - 1 && (
-                <Button
-                  color="error"
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Next
-                </Button>
-              )}
-            </Box>
-          </React.Fragment>
-        )}
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <FeedbackBar
+            feedbackbar={feedbackbar}
+            closeFeedbackbar={closeFeedbackbar}
+          />
+          <div style={{ padding: "1rem" }}>
+            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                      Back
+                    </Button>
+                  )}
+                  {activeStep !== steps.length - 1 && (
+                    <Button
+                      color="error"
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </Box>
+              </React.Fragment>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }

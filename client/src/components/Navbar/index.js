@@ -20,34 +20,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import { Badge } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ReceiptIcon from "@mui/icons-material/Receipt";
 
 import { CartContext } from "../../context/cartContext";
-
-const pages = [];
-const settings = ["Profile", "Account", "Logout"];
 
 const ResponsiveAppBar = ({ user, openModal }) => {
   const navigate = useNavigate();
 
   const { cart } = React.useContext(CartContext);
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const handleSearchClick = () => {
     navigate("/search");
@@ -55,6 +36,17 @@ const ResponsiveAppBar = ({ user, openModal }) => {
 
   const handleReservationsClick = () => {
     navigate("/reservations");
+  };
+
+  const handleOrdersClick = () => {
+    navigate("/orders");
+  };
+
+  const handleClick = () => {
+    window.localStorage.removeItem("ghat");
+    window.localStorage.removeItem("ghrt");
+    window.localStorage.setItem("ghisAuthenticated", false);
+    navigate("/");
   };
 
   return (
@@ -81,50 +73,6 @@ const ResponsiveAppBar = ({ user, openModal }) => {
           >
             GrubHub
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            {
-              <>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  //   anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
-                  sx={{
-                    display: { xs: "block", md: "none" },
-                  }}
-                >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
-            }
-          </Box>
-          <DeliveryDiningIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
           <Typography
             variant="h5"
             noWrap
@@ -143,19 +91,7 @@ const ResponsiveAppBar = ({ user, openModal }) => {
           >
             GrubHub
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, marginLeft: "auto" }}>
             <Button
               style={{ color: "white", marginRight: ".7rem" }}
               startIcon={<SearchIcon />}
@@ -164,19 +100,28 @@ const ResponsiveAppBar = ({ user, openModal }) => {
               Search
             </Button>
             {user.isAuthenticated && (
-              <Button
-                style={{ color: "white", marginRight: ".7rem" }}
-                startIcon={<TableRestaurantIcon />}
-                onClick={handleReservationsClick}
-              >
-                Reservations
-              </Button>
+              <>
+                <Button
+                  style={{ color: "white", marginRight: ".7rem" }}
+                  startIcon={<ReceiptIcon />}
+                  onClick={handleOrdersClick}
+                >
+                  Orders
+                </Button>
+                <Button
+                  style={{ color: "white", marginRight: ".7rem" }}
+                  startIcon={<TableRestaurantIcon />}
+                  onClick={handleReservationsClick}
+                >
+                  Reservations
+                </Button>
+              </>
             )}
             <IconButton
               size="large"
               onClick={() => openModal("CART")}
               color="inherit"
-              style={{ marginRight: "1rem" }}
+              style={{ marginRight: ".5rem" }}
             >
               <Badge
                 badgeContent={cart.items && cart.items.length}
@@ -187,36 +132,11 @@ const ResponsiveAppBar = ({ user, openModal }) => {
             </IconButton>
             {user.isAuthenticated ? (
               <>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr: 2 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                <Tooltip title="Logout">
+                  <IconButton onClick={handleClick} color="inherit">
+                    <LogoutIcon />
                   </IconButton>
                 </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
               </>
             ) : (
               <>

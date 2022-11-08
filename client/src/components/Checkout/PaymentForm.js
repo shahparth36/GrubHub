@@ -10,7 +10,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Divider } from "@mui/material";
 
-export default function PaymentForm({ placeOrder }) {
+export default function PaymentForm({ isLoading, placeOrder }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -71,6 +71,7 @@ export default function PaymentForm({ placeOrder }) {
               <Button
                 variant="contained"
                 color="error"
+                disabled={isLoading === true}
                 onClick={() => placeOrder("CASH_ON_DELIVERY")}
               >
                 Place Order

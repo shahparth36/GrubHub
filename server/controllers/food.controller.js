@@ -53,7 +53,25 @@ const addFoodItems = async (req, res, next) => {
   }
 };
 
+const getRestaurantDishes = async (req, res, next) => {
+  try {
+    const { restaurantId } = req.params;
+
+    const restaurantDishes = await Food.find({
+      restaurant: restaurantId.toString(),
+    });
+
+    return res.status(200).json({
+      message: "Fetched restaurant dishes successfully",
+      dishes: restaurantDishes,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getFoodItems,
   addFoodItems,
+  getRestaurantDishes,
 };

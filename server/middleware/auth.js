@@ -1,6 +1,7 @@
 const { tokens } = require("../constants");
 
 const User = require("../models").user;
+const Restaurant = require("../models").restaurant;
 
 const { getToken, verifyToken } = require("../utils");
 
@@ -21,7 +22,8 @@ const authorize = async (req, res, next) => {
         .status(403)
         .json({ type: "UnauthorizedError", message: "Invalid JWT token" });
 
-    const user = await User.findOne({ email: verifiedToken.email });
+    let user = await User.findOne({ email: verifiedToken.email });
+    if (!user) user = await Restaurant.findOne({ email: verifiedToken.email });
     req.user = user;
     next();
   } catch (e) {

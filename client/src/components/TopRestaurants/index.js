@@ -73,14 +73,6 @@ function TopRestaurants() {
                       {restaurant.name}
                     </Typography>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div style={{ display: "flex", marginTop: "0.1rem" }}>
-                      <LocationOnIcon style={{ marginTop: "1rem" }} />
-                      <Typography style={{ marginTop: "1rem" }}>
-                        &nbsp; 3 KMs
-                      </Typography>
-                    </div>
-                  </Grid>
                 </Grid>
               </Card>
             </Grid>

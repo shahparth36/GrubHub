@@ -87,7 +87,7 @@ const getRestaurantReservations = async (req, res, next) => {
 
     return res.status(200).json({
       message: "Fetched restaurant reservations successfully",
-      reservation: restaurantReservations,
+      reservations: restaurantReservations,
     });
   } catch (error) {
     next(error);

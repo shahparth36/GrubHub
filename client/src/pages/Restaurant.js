@@ -105,7 +105,9 @@ function Restaurant() {
       result: false,
       quantity: 0,
     };
-    const cartItems = JSON.parse(window.localStorage.getItem("ghcart"));
+    const cartItems = JSON.parse(window.localStorage.getItem("ghcart"))
+      ? JSON.parse(window.localStorage.getItem("ghcart"))
+      : [];
     for (const cartItem of cartItems) {
       if (cartItem._id === dish._id) {
         obj.result = true;
@@ -201,7 +203,6 @@ function Restaurant() {
         setRestaurant(response.data.restaurant);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         navigate("/");
       }
     }
