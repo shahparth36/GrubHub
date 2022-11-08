@@ -16,8 +16,6 @@ import Review from "../components/Checkout/Review";
 
 import axios from "../axios";
 
-import { setToken } from "../utils/localStorage";
-
 import { CartContext } from "../context/cartContext";
 import { UserContext } from "../context/userContext";
 

@@ -61,7 +61,7 @@ const CustomCard = styled("div")(({ theme }) => ({
 }));
 
 function Restaurant() {
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();

@@ -53,7 +53,7 @@ export default function PartnerRegistration() {
           password: data.get("password"),
           address: data.get("address"),
         };
-        const response = await axios.post("/restaurant", restaurantDetails);
+        await axios.post("/restaurant", restaurantDetails);
         setFeedbackbar({
           isOpen: true,
           message: "Restaurant registered successfully",
@@ -66,10 +66,7 @@ export default function PartnerRegistration() {
           email: data.get("email"),
           password: data.get("password"),
         };
-        const response = await axios.post(
-          "/register/delivery-agent",
-          deliveryAgentDetails
-        );
+        await axios.post("/register/delivery-agent", deliveryAgentDetails);
         setFeedbackbar({
           isOpen: true,
           message: "Registration Successfull",
