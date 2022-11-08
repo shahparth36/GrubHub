@@ -6,9 +6,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import Typography from "@mui/material/Typography";
 import { purple } from "@mui/material/colors";
-import Chip from "@mui/material/Chip";
 
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import EmailIcon from "@mui/icons-material/Email";

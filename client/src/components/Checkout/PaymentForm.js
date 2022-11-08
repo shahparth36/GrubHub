@@ -1,14 +1,11 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import { Button } from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, Divider } from "@mui/material";
 
 export default function PaymentForm({ isLoading, placeOrder }) {
   const [expanded, setExpanded] = React.useState(false);

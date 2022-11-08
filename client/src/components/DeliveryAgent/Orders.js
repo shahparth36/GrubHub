@@ -13,11 +13,13 @@ import axios from "../../axios";
 
 import LoadingSpinner from "../LoadingSpinner";
 import FeedbackBar from "../FeedbackBar";
-import { UserContext } from "../../context/userContext";
 import UpdateOrder from "../Restaurant/UpdateOrder";
 import DishItems from "../DishItems";
+
 import RestaurantInfo from "./RestaurantInfo";
 import CustomerInfo from "./CustomerInfo";
+
+import { UserContext } from "../../context/userContext";
 
 function getPaymentType(paymentType) {
   return paymentType === "CASH_ON_DELIVERY" ? "Cash On Delivery" : "Online";

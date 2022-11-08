@@ -1,42 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Divider, IconButton, Paper } from "@mui/material";
-import TextField from "@mui/joy/TextField";
-import CloseIcon from "@mui/icons-material/Close";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import FeedbackBar from "../components/FeedbackBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 import AddressForm from "../components/Checkout/AddressForm";
 import PaymentForm from "../components/Checkout/PaymentForm";
 import Review from "../components/Checkout/Review";
 
 import axios from "../axios";
+
 import { setToken } from "../utils/localStorage";
 
 import { CartContext } from "../context/cartContext";
 import { UserContext } from "../context/userContext";
-import FeedbackBar from "../components/FeedbackBar";
-import LoadingSpinner from "../components/LoadingSpinner";
 
 const steps = ["Delivery address", "Review your order", "Payment details"];
 

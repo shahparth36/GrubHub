@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/cartContext";
-import LoadingSpinner from "../LoadingSpinner";
+import { Outlet, useNavigate } from "react-router";
+
 import Signup from "../Signup";
 import Navbar from "../Navbar";
 import Login from "../Login";
 import Cart from "../Cart";
 import FeedbackBar from "../FeedbackBar";
+import LoadingSpinner from "../LoadingSpinner";
+
 import { UserContext } from "../../context/userContext";
+import { CartContext } from "../../context/cartContext";
 
 import axios from "../../axios";
-import { Outlet, useNavigate } from "react-router";
 
 function CustomerLayout() {
   const navigate = useNavigate();

@@ -1,6 +1,3 @@
-const { default: mongoose } = require("mongoose");
-
-const userRoles = require("../constants").userRoles;
 const orderConstants = require("../constants").order;
 const payment = require("../constants").payment;
 

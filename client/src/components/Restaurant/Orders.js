@@ -9,13 +9,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Typography } from "@mui/material";
 
-import axios from "../../axios";
+import UpdateOrder from "./UpdateOrder";
 
 import LoadingSpinner from "../LoadingSpinner";
 import FeedbackBar from "../FeedbackBar";
-import { UserContext } from "../../context/userContext";
-import UpdateOrder from "./UpdateOrder";
 import DishItems from "../DishItems";
+
+import axios from "../../axios";
+
+import { UserContext } from "../../context/userContext";
 
 function getPaymentType(paymentType) {
   return paymentType === "CASH_ON_DELIVERY" ? "Cash On Delivery" : "Online";

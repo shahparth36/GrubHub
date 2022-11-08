@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import Typography from "@mui/material/Typography";
-import { blue } from "@mui/material/colors";
+import { purple } from "@mui/material/colors";
 import Chip from "@mui/material/Chip";
 
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
@@ -21,7 +21,7 @@ function DishItems({ items, isOpen, handleClose }) {
         {items.map((item, index) => (
           <ListItem key={index}>
             <ListItemAvatar>
-              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <Avatar sx={{ bgcolor: purple[100], color: purple[600] }}>
                 <RestaurantMenuIcon />
               </Avatar>
             </ListItemAvatar>

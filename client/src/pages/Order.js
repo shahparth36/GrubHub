@@ -1,25 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import { Divider, IconButton, Paper } from "@mui/material";
-import TextField from "@mui/joy/TextField";
-import CloseIcon from "@mui/icons-material/Close";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-
-import axios from "../axios";
-import { setToken } from "../utils/localStorage";
 
 import { CartContext } from "../context/cartContext";
 import { UserContext } from "../context/userContext";

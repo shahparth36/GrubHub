@@ -6,22 +6,17 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import { Badge } from "@mui/material";
+
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ReceiptIcon from "@mui/icons-material/Receipt";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 
 import { CartContext } from "../../context/cartContext";
 

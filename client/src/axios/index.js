@@ -4,7 +4,7 @@ import { getTokens } from "../utils/localStorage";
 let baseURL;
 
 if (process.env.NODE_ENV === "production") {
-  baseURL = "https://locric.herokuapp.com/api";
+  baseURL = "https://grubhub.herokuapp.com/api";
 } else {
   baseURL = "http://localhost:5000/api";
 }

@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import axios from "../../axios";
 
@@ -22,7 +22,6 @@ function Reservations() {
   const [restaurantReservations, setRestaurantReservations] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpdateOrderModalOpen, setIsUpdateOrderModalOpen] = useState(false);
 
   const [feedbackbar, setFeedbackbar] = useState({
     isOpen: false,
@@ -72,7 +71,7 @@ function Reservations() {
       }
     }
     fetchData();
-  }, [isUpdateOrderModalOpen]);
+  }, []);
 
   return (
     <div>

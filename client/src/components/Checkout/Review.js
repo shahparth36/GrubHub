@@ -1,12 +1,10 @@
 import * as React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { Divider, IconButton, Paper } from "@mui/material";
+
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -14,9 +12,6 @@ import { UserContext } from "../../context/userContext";
 import { CartContext } from "../../context/cartContext";
 
 export default function Review() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-
   const { user } = React.useContext(UserContext);
   const { cart } = React.useContext(CartContext);
 

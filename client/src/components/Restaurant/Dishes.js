@@ -9,13 +9,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Link, Typography } from "@mui/material";
 
-import axios from "../../axios";
+import AddDish from "./AddDish";
 
 import LoadingSpinner from "../LoadingSpinner";
 import FeedbackBar from "../FeedbackBar";
 
+import axios from "../../axios";
+
 import { UserContext } from "../../context/userContext";
-import AddDish from "./AddDish";
 
 function Dishes() {
   const { user } = useContext(UserContext);

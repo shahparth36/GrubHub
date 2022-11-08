@@ -9,13 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 
 import LoadingSpinner from "../components/LoadingSpinner";
+import DishItems from "../components/DishItems";
 
 import axios from "../axios";
+
 import { UserContext } from "../context/userContext";
-import DishItems from "../components/DishItems";
-import { Button } from "@mui/material";
 
 function getPaymentType(paymentType) {
   return paymentType === "CASH_ON_DELIVERY" ? "Cash On Delivery" : "Online";
@@ -66,7 +67,7 @@ function CustomerOrders() {
     }
     fetchData();
   }, []);
-  console.log(orders);
+
   return isLoading ? (
     <LoadingSpinner />
   ) : (

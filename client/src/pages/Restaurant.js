@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import styled from "@emotion/styled";
 import {
   Box,
   Button,
@@ -16,7 +17,6 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
@@ -25,9 +25,10 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
 import axios from "../axios";
+
 import FeedbackBar from "../components/FeedbackBar";
 import LoadingSpinner from "../components/LoadingSpinner";
-import styled from "@emotion/styled";
+
 import { CartContext } from "../context/cartContext";
 import { UserContext } from "../context/userContext";
 

@@ -5,15 +5,18 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Typography } from "@mui/material";
+
 import Textarea from "@mui/joy/Textarea";
 import TextField from "@mui/joy/TextField";
+
 import axios from "../../axios";
+
 import { setToken } from "../../utils/localStorage";
 
 import { UserContext } from "../../context/userContext";
 
 function Signup({ isSignupModalOpen, closeModal, openModal, setFeedbackbar }) {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [userValues, setUserValues] = useState({
     name: "",

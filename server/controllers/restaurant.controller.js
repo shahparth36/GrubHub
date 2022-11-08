@@ -1,11 +1,9 @@
-const userRoles = require("../constants").userRoles;
-
 const User = require("../models").user;
 const Restaurant = require("../models").restaurant;
 const Food = require("../models").food;
 
 const { default: mongoose } = require("mongoose");
-const { generateToken, hashPassword } = require("../utils");
+const { hashPassword } = require("../utils");
 
 const getSearchResults = async (req, res, next) => {
   try {

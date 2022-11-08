@@ -1,8 +1,5 @@
-const { default: mongoose } = require("mongoose");
-
 const Reservation = require("../models").reservation;
 const User = require("../models").user;
-const Table = require("../models").table;
 const Restaurant = require("../models").restaurant;
 
 const addReservation = async (req, res, next) => {
