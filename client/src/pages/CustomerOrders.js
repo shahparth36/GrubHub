@@ -53,6 +53,11 @@ function CustomerOrders() {
     setIndex(index);
     setIsViewModalOpen(true);
   };
+
+  const handleOrderClick = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -105,7 +110,14 @@ function CustomerOrders() {
               orders.map((order, index) => (
                 <TableRow
                   key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  onClick={() => handleOrderClick(order._id)}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:hover": {
+                      backgroundColor: "rgb(224, 224, 224)",
+                      cursor: "pointer",
+                    },
+                  }}
                 >
                   <TableCell align="center" component="th" scope="row">
                     {order.restaurant.name}

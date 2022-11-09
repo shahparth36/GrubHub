@@ -10,6 +10,15 @@ import axios from "../axios";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 
+function getOrderStatus(orderStatus) {
+  let result = orderStatus;
+  if (orderStatus === "CONFIRMED") result = "Confirmed";
+  else if (orderStatus === "PREPARING") result = "Preparing";
+  else if (orderStatus === "OUT_FOR_DELIVERY") result = "Out For Delivery";
+  else if (orderStatus === "COMPLETED") result = "Completed";
+  return result;
+}
+
 function OrderDetails() {
   const params = useParams();
   const navigate = useNavigate();
@@ -67,7 +76,9 @@ function OrderDetails() {
             <Divider />
             <div style={{ padding: "1rem", paddingLeft: ".2rem" }}>
               <Typography sx={{ fontWeight: "bold" }}>ORDER STATUS</Typography>
-              <Typography>{order && order.orderStatus}</Typography>
+              <Typography>
+                {order && getOrderStatus(order.orderStatus)}
+              </Typography>
             </div>
             <div style={{ paddingBottom: "1rem" }}>
               <Typography sx={{ fontWeight: "bold" }}>RESTAURANT</Typography>
@@ -79,7 +90,7 @@ function OrderDetails() {
               <Typography sx={{ fontWeight: "bold" }}>PAYMENT</Typography>
               <Typography>
                 {order && order.paymentType === "CASH_ON_DELIVERY"
-                  ? "Cash on delivery"
+                  ? "Cash On Delivery"
                   : "Online"}
               </Typography>
             </div>
@@ -136,15 +147,16 @@ function OrderDetails() {
                       <Chip
                         style={{ marginRight: ".5rem" }}
                         label={orderItem.quantity}
+                        color="secondary"
                       />
-                      <Typography>x</Typography>
+                      <Typography style={{ marginTop: ".2rem" }}>x</Typography>
                       <Typography
                         style={{
                           fontSize: "1rem",
                           fontWeight: "bold",
                           marginBottom: "1.5rem",
                           marginLeft: ".5rem",
-                          marginTop: ".1rem",
+                          marginTop: ".2rem",
                         }}
                       >
                         &#8377; {item.pricePerQuantity}
