@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function PaymentForm({ isLoading, placeOrder }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState("panel2");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -21,7 +21,8 @@ export default function PaymentForm({ isLoading, placeOrder }) {
       </Typography>
       <div style={{ borderRadius: "1rem" }}>
         <Accordion
-          expanded={expanded === "panel1"}
+          expanded={false}
+          disabled={true}
           onChange={handleChange("panel1")}
         >
           <AccordionSummary
@@ -30,7 +31,7 @@ export default function PaymentForm({ isLoading, placeOrder }) {
             id="panel1bh-header"
           >
             <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              Pay Online
+              Pay Online {`( Coming Soon )`}
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
               Pay using Card / Net Banking / UPI
