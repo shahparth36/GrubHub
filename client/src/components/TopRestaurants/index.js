@@ -8,23 +8,12 @@ import Typography from "@mui/material/Typography";
 
 import axios from "../../axios";
 
-function TopRestaurants() {
+function TopRestaurants({ restaurants }) {
   const navigate = useNavigate();
-
-  const [restaurants, setRestaurants] = useState([]);
 
   const handleClick = (restaurantId) => {
     navigate(`/restaurant/${restaurantId}`);
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get("/restaurants");
-      const restaurants = response.data.restaurants;
-      setRestaurants(restaurants.slice(0, 3));
-    }
-    fetchData();
-  }, []);
 
   return (
     <Grid container spacing={2}>

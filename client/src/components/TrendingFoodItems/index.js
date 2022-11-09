@@ -11,22 +11,8 @@ import axios from "../../axios";
 
 import { CartContext } from "../../context/cartContext";
 
-function TrendingFoodItems() {
+function TrendingFoodItems({ foodItems }) {
   const { cart } = useContext(CartContext);
-  const [foodItems, setFoodItems] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get("/food");
-        const foodItems = response.data.foodItems;
-        setFoodItems(foodItems);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
 
   return (
     <Grid container spacing={2} style={{ marginBottom: 20 }}>
