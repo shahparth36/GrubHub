@@ -120,7 +120,7 @@ function CustomerOrders() {
                   }}
                 >
                   <TableCell align="center" component="th" scope="row">
-                    {order.restaurant.name}
+                    {order && order.restaurant && order.restaurant.name}
                   </TableCell>
                   <TableCell align="center">
                     &#8377; {order.grandTotal}
