@@ -79,7 +79,7 @@ function Checkout() {
       });
       const orderDetails = {
         customerId: user.userDetails._id,
-        restaurantId: localCart[0].restaurant._id,
+        restaurantId: localCart[0].restaurant,
         paymentType,
         items: localCart,
         billAmount: getItemsTotal(),
